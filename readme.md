@@ -15,3 +15,20 @@
 
 ## Repository
 - https://github.com/tkmagesh/shell-react-may-2024
+
+## Software Requirements
+- Chrome Browser
+- Visual Studio Code ( or any other editor)
+- Node.js (LTS version - 20.10.x)
+- Git Client
+
+## React.js?
+- Library for building Rich Internet Applications (SPA)
+
+## Challenges in Bulding RIA
+- SalaryCalculator
+    - basic
+    - hra
+    - da
+    - tax
+- salary = basic + hra + da - tax
