@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Calculator</title>
+    <style>
+        body{
+            margin-left: 50px;
+        }
+        .field{
+            margin-bottom: 10px;
+        }
+        label{
+            display: block;
+        }
+        td{
+            padding-right: 10px;
+        }
+    </style>
+    <script src="jquery-3.7.1.js"></script>
+    <script>
+        /* 
+            Assumptions
+            1. The implemented functionality meets 100% of the functional requirement
+            2. Reorganizing the code into separate files will be taken care
+            
+        */
+       /* 
+            Versions
+            01. Initial Version
+            02. Segregate UI and NON-UI responsibilities
+            03. Attempt to make UI & Model loosely coupled
+            04. Introducing onSalaryChange event
+            05. Introduce 'getter', 'setter' & 'onChange' for basic
+
+       */
+
+        // NON-UI
+        // constructor function (class)
+        // state & behavior 
+        function SalaryCalculatorModel(){
+            // state
+            var _data = {
+                basic : 0,
+                hra : 0,
+                da : 0,
+                tax : 0,
+                salary : 0
+            };
+
+            var _subscribers = {
+                basic : [],
+                hra : [],
+                da : [],
+                tax : [],
+                salary : []
+            };
+
+            this.get = function(attrName){
+                return _data[attrName];
+            };
+            this.set = function(attrName, value){
+                if (_data[attrName] === value) return;
+                _data[attrName] = value;
+                var callbackFns = _subscribers[attrName];
+                callbackFns.forEach(function(callbackFn){
+                    if (typeof callbackFn === 'function'){
+                        callbackFn()
+                    }
+                });
+                
+            };
+            this.subscribe = function(attrName, callbackFn){
+                _subscribers[attrName].push(callbackFn);
+            };
+            this.toJSON = function(){
+                return {
+                    basic : _data.basic,
+                    hra : _data.hra,
+                    da : _data.da,
+                    tax : _data.tax,
+                    salary : _data.salary
+                };
+            }
+        }
+        // behavior
+        SalaryCalculatorModel.prototype.calculate = function(){
+            var gross = this.get('basic') + this.get('hra') + this.get('da'),
+                net = gross * ((100-this.get('tax'))/100)
+            this.set('salary', net);
+        }
+
+        // UI
+        // Encapsulates Presentation + UI Behavior
+        function SalaryCalculator(model){
+            
+            var $viewEl = this.$viewEl = $('<div></div>');
+
+            this.render = function(){
+                var data = model.toJSON();
+                var template = `
+                    <section>
+                        <div class="field">
+                            <label for="">Basic :</label>
+                            <input type="number" name="" id="txtBasic">
+                        </div>
+                        <div class="field">
+                            <label for="">HRA :</label>
+                            <input type="number" name="" id="txtHra">
+                        </div>
+                        <div class="field">
+                            <label for="">DA :</label>
+                            <input type="number" name="" id="txtDa">
+                        </div>
+                        <div class="field">
+                            <label for="">Tax :</label>
+                            <input type="range" name="" id="rangeTax" min="0" max="30" value="0">
+                        </div>
+                        <div class="field">
+                            <button id="btnCalculate">Calculate</button>
+                        </div>
+                        <div class="field">
+                            <table>
+                                <thead>
+                                    <th>Basic</th>
+                                    <th>HRA</th>
+                                    <th>DA</th>
+                                    <th>Tax</th>
+                                    <th>Salary</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td id="tdBasic">${data.basic}</td>
+                                        <td id="tdHra">${data.hra}</td>
+                                        <td id="tdDa">${data.da}</td>
+                                        <td id="tdTax">${data.tax}</td>
+                                        <td id="tdSalary">${data.salary}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                `;
+                $viewEl.html(template)
+            }
+
+            // Reacting to user actions
+            $viewEl.on('input', '#txtBasic', function(){
+                model.set('basic', parseInt($(this).val()));
+            });
+
+            $viewEl.on('input', '#txtHra', function(){
+                model.set('hra', parseInt($(this).val()));
+            });
+
+            $viewEl.on('input', '#txtDa', function(){
+                model.set('da', parseInt($(this).val()));
+            });
+
+            $viewEl.on('input', '#rangeTax', function(){
+                model.set('tax', parseInt($(this).val()));
+            });
+
+            $viewEl.on('click', '#btnCalculate', function(){
+                model.calculate();
+            });
+
+            // Reacting to model changes
+            model.subscribe('salary', this.render);
+            model.subscribe('basic', this.render);
+            model.subscribe('hra', this.render);
+            model.subscribe('da', this.render);
+            model.subscribe('tax', this.render);
+        }
+        /* 
+        $(function(){
+            
+            // DO NOT assign anything to "window" in your applications
+            window['model'] = new SalaryCalculatorModel();
+
+            var view1 = new SalaryCalculator(model)
+            var view2 = new SalaryCalculator(model)
+
+            view1.$viewEl.appendTo(document.body)
+            view2.$viewEl.appendTo(document.body)
+
+            view1.render()
+            view2.render()
+
+            model.calculate()
+            
+        }) 
+        */
+    </script>
+</head>
+<body>
+    <h1>Salary Calculator</h1>
+    <hr>
+    
+</body>
+</html>
