@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VDOM - Fragment</title>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script>
+        var root, btnRender;
+        var counter = 0;
+
+        function onBtnRenderClick(){
+            ++counter;
+            
+            var appEle = React.createElement('div', null, 
+                React.createElement('h1', null, 'React.js!'),
+                React.createElement('div', null, 
+                    React.createElement('span', null, 'Counter : '),
+                    React.createElement('span', null, counter),
+                ),  
+                React.createElement('section', null, 
+                    React.createElement('h3', null, 'Introduction'),
+                    React.createElement('p', null, 'Incididunt incididunt est ea ipsum labore cupidatat occaecat id laborum reprehenderit ipsum. Eiusmod ut nulla occaecat deserunt enim ea sit cupidatat laboris excepteur ex laboris eiusmod enim. Aute magna elit do dolor anim aute excepteur est cupidatat do veniam est pariatur voluptate. Quis consectetur non id ad eiusmod in excepteur amet dolor enim velit ea cupidatat. Ad culpa eu ea exercitation nisi cupidatat non magna irure. Nostrud excepteur in dolor officia veniam proident magna pariatur eiusmod officia ad elit minim id. Eu nisi ea labore nisi velit aliquip quis consectetur velit irure pariatur reprehenderit voluptate nisi.Cupidatat laborum cillum cillum ipsum ullamco commodo sunt esse pariatur Lorem. Ipsum elit dolore Lorem nisi Lorem veniam fugiat nostrud cillum ad cillum qui commodo. Eiusmod ipsum laboris dolor ex adipisicing reprehenderit aliquip ad enim excepteur ex sint. Veniam occaecat reprehenderit proident excepteur incididunt consectetur cillum ut veniam velit pariatur pariatur. Et id proident ea cillum adipisicing officia voluptate esse commodo sit velit. Fugiat pariatur minim voluptate reprehenderit ex aute ea in ullamco et do eiusmod.'),
+                    React.createElement('p', null, 'Aliquip pariatur irure ad eu eiusmod reprehenderit labore veniam. Aute cupidatat aliqua proident id. Qui ex in nostrud Lorem. Cillum excepteur dolor officia do consequat sunt ut dolor sint magna ut veniam.Ad quis esse esse mollit fugiat duis nulla cillum quis amet sit. Amet aliqua esse enim incididunt ullamco do. Magna enim ex reprehenderit occaecat commodo Lorem officia velit in irure mollit cillum in. Aute excepteur exercitation proident tempor sunt excepteur non. Fugiat dolore laborum dolore sit pariatur. Pariatur labore irure pariatur voluptate.'),
+                    React.createElement('p', null, 'Quis id ut deserunt ipsum duis exercitation qui ea ipsum irure exercitation deserunt irure. Ex ad eu velit labore culpa sint magna dolor sint ullamco nulla ipsum. Exercitation nulla nisi cupidatat aute Lorem labore aliqua ad deserunt proident elit.Incididunt ex consectetur mollit amet non sit reprehenderit. Duis magna anim dolor occaecat magna excepteur veniam labore cillum ullamco qui incididunt. Eiusmod laboris eu aliqua reprehenderit in. Duis nostrud dolore cupidatat aute mollit officia.')
+                ),
+                React.createElement('section', null, 
+                    React.createElement('h3', null, 'Advantages'),
+                    React.createElement('ul', null,
+                        React.createElement('li', null, 'Declarative'),
+                        React.createElement('li', null, 'Efficient'),
+                    )
+                )
+            );
+
+            root.render(appEle);
+        }
+
+        function onDocumentLoad(){
+            btnRender = document.getElementById('btnRender');
+            btnRender.addEventListener('click', onBtnRenderClick)
+
+            root = ReactDOM.createRoot(document.getElementById('root'))
+        }
+        window.addEventListener('load', onDocumentLoad)
+    </script>
+</head>
+<body>
+    <button id="btnRender">Render</button>
+    <div id="root"></div>
+</body>
+</html>

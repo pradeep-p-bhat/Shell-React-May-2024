@@ -32,3 +32,20 @@
     - da
     - tax
 - salary = basic + hra + da - tax
+
+## JSX
+- Every element MUST have the corresponding close element
+- Use 'htmlFor' instead of 'for'
+- Use 'className' instead of 'class'
+
+## Hooks
+- functions to handle side effects in React components
+- function name must start with 'use'
+- Can be used ONLY in a component function or in another hook function
+- Built in hooks
+    - useState
+    - useEffects
+    - useRef
+    - useReducer
+    - useMemo
+    - useCallback
