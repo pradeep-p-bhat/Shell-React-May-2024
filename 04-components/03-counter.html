@@ -8,15 +8,25 @@
     <script src="react.development.js"></script>
     <script src="react-dom.development.js"></script>
     <script type="text/babel">
+        const Counter = () => {
+            const [count, setCount] = React.useState(0)
+            return (
+                <>
+                    <h1>Counter</h1>
+                    <button onClick={() => setCount(count-1)}>Decrement</button>
+                    <span> [ {count} ] </span>
+                    <button onClick={() => setCount(count+1)}>Increment</button>
+                </>
+            )
+        }
 
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<Counter/>)
     </script>
 </head>
 <body>
     <div id="root">
-        <h1>Counter</h1>
-        <button>Decrement</button>
-        <span>0</span>
-        <button>Increment</button>
+        
     </div>
 </body>
 </html>
