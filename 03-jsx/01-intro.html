@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VDOM - Fragment</title>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script src="babel.min.js"></script>
+    <script type="text/babel">
+        var root, btnRender;
+        var counter = 0;
+
+        function onBtnRenderClick(){
+            ++counter;
+            
+            var appEle = (
+                <div>
+                    <h1>React.js</h1>
+                    <div>
+                        <span>Counter :</span>
+                        <span>{counter}</span>
+                    </div>
+                    <section>
+                        <h3>Introduction</h3>
+                        <p>Deserunt aute cupidatat occaecat deserunt nostrud eiusmod voluptate ut aute.</p>
+                        <p>Magna ipsum non dolor est dolore.</p>
+                        <p>Aliqua enim occaecat enim adipisicing officia fugiat.</p>
+                    </section>
+                    <section>
+                        <h3>Advantages</h3>
+                        <ul>
+                            <li>Declarative</li>
+                            <li>Efficient</li>
+                        </ul>
+                    </section>
+                </div>
+            );
+
+            root.render(appEle);
+        }
+
+    
+        btnRender = document.getElementById('btnRender');
+        btnRender.addEventListener('click', onBtnRenderClick)
+        root = ReactDOM.createRoot(document.getElementById('root'))
+        
+    </script>
+</head>
+<body>
+    <button id="btnRender">Render</button>
+    <div id="root"></div>
+</body>
+</html>
