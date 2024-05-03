@@ -32,3 +32,8 @@
     - da
     - tax
 - salary = basic + hra + da - tax
+
+## JSX
+- Every element MUST have the corresponding close element
+- Use 'htmlFor' instead of 'for'
+- Use 'className' instead of 'class'

@@ -7,6 +7,11 @@
     <script src="react.development.js"></script>
     <script src="react-dom.development.js"></script>
     <script src="babel.min.js"></script>
+    <style>
+        .highlight {
+            color : red;
+        }
+    </style>
     <script type="text/babel">
         var root, btnRender;
         var counter = 0;
@@ -17,8 +22,11 @@
             var appEle = (
                 <div>
                     <h1>React.js</h1>
+                    {/* Every element must have the corresponding close element */}
+                    <hr/>
                     <div>
-                        <span>Counter :</span>
+                        {/* Use 'htmlFor' in place of 'for' */}
+                        <label htmlFor="">Counter : </label>
                         <span>{counter}</span>
                     </div>
                     <section>
@@ -28,7 +36,8 @@
                         <p>Aliqua enim occaecat enim adipisicing officia fugiat.</p>
                     </section>
                     <section>
-                        <h3>Advantages</h3>
+                        {/* Use 'className' in place of 'class' */}
+                        <h3 className="highlight">Advantages</h3>
                         <ul>
                             <li>Declarative</li>
                             <li>Efficient</li>
