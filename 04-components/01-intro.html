@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Component Intro</title>
+    <script src="babel.min.js"></script>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <style>
+        #root > h1.highlight {
+            color : red;
+        }
+    </style>
+    <script type="text/babel">
+        // Component = Encapsulation of Presentation + UI Behavior + State
+        function HelloWorld(){
+            // presentation
+            return (
+                <>
+                {/* <React.Fragment> */}
+                    <h1 className="highlight">Hello, World!</h1>
+                    <hr/>
+                    <p>Irure culpa sunt culpa laboris ea nostrud nisi adipisicing. Sit cillum minim voluptate velit exercitation. Consequat commodo velit qui officia exercitation adipisicing elit qui quis cupidatat elit non reprehenderit. Eiusmod sit aliquip est labore tempor mollit. Ipsum nisi eiusmod ipsum nostrud nisi pariatur amet dolore sit. Voluptate Lorem mollit reprehenderit aliqua velit.</p>
+                {/* </React.Fragment> */}
+                </>
+            );
+        }
+
+        var root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(React.createElement(HelloWorld))
+    </script>
+</head>
+<body>
+    <div id="root">
+        
+    </div>
+</body>
+</html>
