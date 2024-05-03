@@ -49,3 +49,13 @@
     - useReducer
     - useMemo
     - useCallback
+
+## Weekend Study
+- Array Methods
+    - forEach
+    - filter
+    - map
+    - reduce
+
+## Weekend Assignment
+![image](./images/Day-2-Assignment.png)
