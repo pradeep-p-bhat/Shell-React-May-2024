@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greeter</title>
+    <script src="babel.min.js"></script>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script type="text/babel">
+        function Greeter({msg, x, y, children}){
+            
+            console.log(children);
+
+            let [greetMsg, setGreetMsg] = React.useState('[default greet message]');
+
+            let txtUserNameRef = React.useRef();
+
+            const onBtnGreetClick = (evt) => {
+                let userName = txtUserNameRef.current.value;
+                setGreetMsg(`Hi ${userName}, ${msg}`);
+            };
+
+            return (
+                <>
+                    <h1>Greeter</h1>
+                    <hr/>
+                        {children[0]}
+                    <hr/>
+                    <hr/>
+                        {children[1]}
+                    <hr/>
+                    <label>User Name :</label>
+                    <input type="text" ref={txtUserNameRef} />
+                    <button onClick={onBtnGreetClick}>Greet</button>
+                    <div>{greetMsg}</div>
+                </>
+            )
+        }
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(
+            <div>
+                <Greeter msg="Have a good day!" x={100} y={200}>
+                    <div>Aute tempor nulla cupidatat exercitation esse officia dolor deserunt dolore occaecat aliqua amet. Ut minim do tempor commodo elit deserunt deserunt sint deserunt aliqua in consectetur. Sint deserunt enim ipsum voluptate fugiat aute incididunt sint. Sit id Lorem fugiat culpa reprehenderit sint ullamco Lorem. Nisi eiusmod deserunt in qui minim magna veniam veniam cupidatat occaecat proident.</div>
+                    <div>Amet elit elit veniam exercitation elit magna labore non. Aliquip eiusmod pariatur sunt eiusmod adipisicing laboris eu esse. Esse pariatur ullamco cupidatat veniam commodo ex nostrud. Dolore in irure magna sunt in veniam culpa. Fugiat tempor et reprehenderit veniam reprehenderit ullamco ex est. Occaecat in enim labore consectetur esse aute incididunt duis nulla anim. Est elit consequat voluptate consequat cillum minim deserunt commodo reprehenderit eiusmod deserunt nostrud nostrud anim.</div>
+                </Greeter>
+            </div>
+        )
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List</title>
+    <script src="babel.min.js"></script>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script type="text/babel">
+        const Products = () => {
+            const productNames = ['Pen', 'Pencil', 'Marker', 'Scribble Pad'];
+            
+            /* 
+            const productItems = [];
+            for (let productName of productNames){
+                const productItem = (<li>{productName}</li>)
+                productItems.push(productItem)
+            } 
+            */
+           /* 
+           const productItems = [];
+           for (let index = 0; index < productNames.length; index++) {
+            const productName = productNames[index];
+            const productItem = (<li key={index}>{productName}</li>)
+            productItems.push(productItem)
+           } 
+           */
+            const productItems = productNames.map((productName, index) => (<li key={index}>{productName}</li>))
+            return(
+                <>
+                    <h1>Products</h1>
+                    <ul>
+                        {productItems}
+                    </ul>
+                </>
+            )
+        }
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<Products/>)
+    </script>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+</body>
+</html>
