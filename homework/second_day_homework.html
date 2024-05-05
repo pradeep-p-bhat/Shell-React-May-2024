@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products</title>
+    <script src="babel.min.js"></script>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script type="text/babel">
+      const Products = () => {
+        let txtProductNameRef = React.useRef();
+        const [count, setCount] = React.useState(0);
+        const [productItems, setProductItems] = React.useState([]);
+
+        const onProductAdd = () => {
+          let productName = txtProductNameRef.current.value;
+          if (productName === "") {
+            alert("Please enter product name!");
+            return;
+          }
+          setProductItems([...productItems, productName]);
+          txtProductNameRef.current.value = "";
+          setCount(count + 1);
+        };
+
+        const onProductDelete = (index) => {
+          setProductItems(
+            productItems.filter((productItems, i) => i !== index)
+          );
+          setCount(count - 1);
+        };
+
+        return (
+          <>
+            <h1>Products [{count}]</h1>
+            <label>Product Name :</label>
+            <input type="text" ref={txtProductNameRef} />
+            <button onClick={onProductAdd}>Add</button>
+            {count === 0 ? (
+              <div>No Product to display!</div>
+            ) : (
+              <ul>
+                {productItems.map((productItems, index) => (
+                  <li key={index}>
+                    {productItems}{" "}
+                    <button onClick={() => onProductDelete(index)}>
+                      {" "}
+                      Delete{" "}
+                    </button>{" "}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </>
+        );
+      };
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<Products />);
+    </script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
