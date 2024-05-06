@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bug Tracker</title>
+    <script src="babel.min.js"></script>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <style>
+      body {
+        margin-left: 50px;
+      }
+
+      section {
+        margin-bottom: 10px;
+      }
+
+      .stats,
+      .bugname {
+        font-size: 18pt;
+      }
+
+      .bugname {
+        cursor: pointer;
+      }
+
+      .closed {
+        text-decoration: line-through;
+        font-style: italic;
+        color: red;
+      }
+
+      .datetime {
+        font-style: italic;
+        font-weight: bold;
+      }
+
+      ul {
+        width: 500px;
+        list-style: none;
+        -webkit-padding-start: 0px;
+      }
+
+      li {
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid gray;
+        background-color: #e7e7e7;
+      }
+    </style>
+
+    <script type="text/babel">
+      //MODEL
+      function BugTrackerModel() {
+        var _data = {
+          bugs: [
+            /*{ id: 1, name: "Bug - 1", createdAt: new Date(), closed: false },
+            { id: 2, name: "Bug - 2", createdAt: new Date(), closed: true },*/
+          ],
+        };
+
+        this.toJSON = function () {
+          return {
+            bugs: _data.bugs,
+          };
+        };
+      }
+
+      //UI COMPONENTS
+      function BugTrackerStatsComponent({ bugs}) {
+        return (
+          <section className="stats">
+            <span className="closed">{bugs.length}</span>
+            <span>/</span>
+            <span>{bugs.length}</span>
+          </section>
+        );
+      }
+
+      function BugTrackerCreateComponent() {
+        return (
+          <section className="edit">
+            <label htmlFor="">Bug Name :</label>
+            <input type="text" name="" id="" ref={txtBugNameRef}/>
+            <button onClick={onBugAdd}>Add New</button>
+          </section>
+        );
+      }
+
+      function BugTrackerSortComponent() {
+        return (
+          <section className="sort">
+            <label htmlFor="">Order By :</label>
+            <select name="" id="">
+              <option value=""></option>
+              <option value=""></option>
+            </select>
+            <label htmlFor="">Descending ? :</label>
+            <input type="checkbox" name="" id="" />
+          </section>
+        );
+      }
+
+      function BugTrackerListComponent() {
+        return (
+          <section className="list">
+            <ul>
+              <li>
+                <span className="bugname">[Bug - 1]</span>
+                <div className="datetime">[createdAt]</div>
+                <button>Remove</button>
+              </li>
+              <li>
+                <span className="bugname closed">[Bug - 2]</span>
+                <div className="datetime">[createdAt]</div>
+                <button>Remove</button>
+              </li>
+            </ul>
+          </section>
+        );
+      }
+
+      function BugTrackerRemoveClosedBtnComponent() {
+        return (
+          <section>
+            <button>Remove Closed</button>
+          </section>
+        );
+      }
+
+      //MAIN COMPONENT
+      function BugTrackerMainComponent({ model }) {
+        const data = model.toJSON();
+        return (
+          <>
+            <BugTrackerStatsComponent bugs={data.bugs}/>
+            <BugTrackerCreateComponent />
+            <BugTrackerSortComponent />
+            <BugTrackerListComponent />
+            <BugTrackerRemoveClosedBtnComponent />
+          </>
+        );
+      }
+      var root = ReactDOM.createRoot(document.getElementById("root"));
+      const model = new BugTrackerModel();
+      function renderBugTracker() {
+        root.render(<BugTrackerMainComponent model={model} />);
+      }
+      renderBugTracker();
+    </script>
+
+    <!-- 
+        Use Cases:
+        1. Add new bugs
+        2. List the added bugs
+        3. Toggle the 'closed' status of any bug
+        4. Remove any bug
+        5. Remove 'all closed' bugs
+        6. See bug stats ( # of closed bugs / total # of bugs )
+        7. Sort the bugs
+        8. Persist the bugs in the server
+        9. Bugs have to be accessible using unique urls
+        10. Package & deploy the app
+    -->
+  </head>
+
+  <body>
+    <h1>Bug Tracker</h1>
+    <hr />
+    <div id="root"></div>
+  </body>
+</html>
