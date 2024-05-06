@@ -68,13 +68,14 @@
             this.set('salary', net);
         }
 
-        const SalaryCalculatorInput = ({labelText, data, onValueChange}) => {
+        const SalaryCalculatorInput = ({labelText, data, onValueChange, type="number", ...restProps}) => {
             return (
                 <div className="field">
                     <label htmlFor="">{labelText}</label>
-                    <input type="number" 
+                    <input type={type}
                         value={data}
                         onChange = { evt => onValueChange(parseInt(evt.target.value))}
+                        {...restProps}
                     />  
                 </div>
             )
@@ -99,13 +100,13 @@
                             data={data.da} 
                             onValueChange={value => model.set('da', value)}
                         />
-                        
-                        <div className="field">
-                            <label htmlFor="">Tax :</label>
-                            <input type="range" value={data.tax} id="rangeTax" min="0" max="30" 
-                                onChange = { evt => model.set('tax', parseInt(evt.target.value))}
-                            />
-                        </div>
+                        <SalaryCalculatorInput 
+                            labelText="Tax :" 
+                            data={data.tax} 
+                            onValueChange={value => model.set('tax', value)}
+                            type="range"
+                            min="0" max="30"
+                        />
                         <div className="field">
                             <button id="btnCalculate" onClick={() => model.calculate()}>Calculate</button>
                         </div>
