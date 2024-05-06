@@ -13,22 +13,27 @@
     </style>
     <script type="text/babel">
         const Products = () => {
+            const txtNewProductNameRef = React.useRef();
             const [newProductName, setNewProductName] = React.useState('')
             const [products, setProducts] = React.useState([]);
+            
             const onAddClick = () => {
-                // setProducts(products.push(newProductName))
                 setProducts([...products, newProductName])
+                setNewProductName('');
+                txtNewProductNameRef.current.focus()
             }
+            
             const onRemoveClick = (idx) => {
                 products.splice(idx, 1)
                 setProducts([...products])
             }
+            
             return (
                 <>
                     <h3>Products</h3>
                     <div>
                         <label htmlFor="">Product Name : </label>
-                        <input type="text" onChange={ evt => setNewProductName(evt.target.value)} />
+                        <input type="text" ref={txtNewProductNameRef} value={newProductName} onChange={ evt => setNewProductName(evt.target.value)} />
                         <button onClick={onAddClick}>Add New</button>
                     </div>
                     <div>
