@@ -68,39 +68,38 @@
             this.set('salary', net);
         }
 
+        const SalaryCalculatorInput = ({labelText, data, onValueChange}) => {
+            return (
+                <div className="field">
+                    <label htmlFor="">{labelText}</label>
+                    <input type="number" 
+                        value={data}
+                        onChange = { evt => onValueChange(parseInt(evt.target.value))}
+                    />  
+                </div>
+            )
+        }
         const SalaryCalculator = ({model}) => {
             const data = model.toJSON();
             
             return (
                 <section>
-                        <div className="field">
-                            <label htmlFor="">Basic :</label>
-                            {/* <input type="number" value={data.basic}  id="txtBasic"/> */}
-                            {/* 
-                                <input type="number" 
-                                    defaultValue={data.basic}  
-                                    id="txtBasic"
-                                /> 
-                            */}
-                            
-                            <input type="number" 
-                                value={data.basic}
-                                id="txtBasic"
-                                onChange = { evt => model.set('basic', parseInt(evt.target.value))}
-                            />  
-                        </div>
-                        <div className="field">
-                            <label htmlFor="">HRA :</label>
-                            <input type="number" value={data.hra} id="txtHra"
-                                onChange = { evt => model.set('hra', parseInt(evt.target.value))}
-                            />
-                        </div>
-                        <div className="field">
-                            <label htmlFor="">DA :</label>
-                            <input type="number" value={data.da} id="txtDa"
-                                onChange = { evt => model.set('da', parseInt(evt.target.value))}
-                            />
-                        </div>
+                        <SalaryCalculatorInput 
+                            labelText="Basic :" 
+                            data={data.basic} 
+                            onValueChange={value => model.set('basic', value)}
+                        />
+                        <SalaryCalculatorInput 
+                            labelText="HRA :" 
+                            data={data.hra} 
+                            onValueChange={value => model.set('hra', value)}
+                        />
+                        <SalaryCalculatorInput 
+                            labelText="DA :" 
+                            data={data.da} 
+                            onValueChange={value => model.set('da', value)}
+                        />
+                        
                         <div className="field">
                             <label htmlFor="">Tax :</label>
                             <input type="range" value={data.tax} id="rangeTax" min="0" max="30" 
