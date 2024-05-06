@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[Document Title]</title>
+    <script src="babel.min.js"></script>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <style>
+      body {
+        margin-left: 50px;
+      }
+      .field {
+        margin-bottom: 10px;
+      }
+      label {
+        display: block;
+      }
+      td {
+        padding-right: 10px;
+      }
+    </style>
+    <script type="text/babel">
+      function SalaryCalculatorModel() {
+        // state
+        var _data = {
+          basic: 0,
+          hra: 0,
+          da: 0,
+          tax: 0,
+          salary: 0,
+        };
+
+        var _subscribers = [];
+
+        this.get = function (attrName) {
+          return _data[attrName];
+        };
+        this.set = function (attrName, value) {
+          if (_data[attrName] === value) return;
+          _data[attrName] = value;
+          _subscribers.forEach(function (callbackFn) {
+            if (typeof callbackFn === "function") {
+              callbackFn();
+            }
+          });
+        };
+        this.subscribe = function (callbackFn) {
+          _subscribers.push(callbackFn);
+        };
+        this.toJSON = function () {
+          return {
+            basic: _data.basic,
+            hra: _data.hra,
+            da: _data.da,
+            tax: _data.tax,
+            salary: _data.salary,
+          };
+        };
+      }
+      // behavior
+      SalaryCalculatorModel.prototype.calculate = function () {
+        var gross = this.get("basic") + this.get("hra") + this.get("da"),
+          net = gross * ((100 - this.get("tax")) / 100);
+        this.set("salary", net);
+      };
+
+      const SalaryCalculatorInput = ({ labelText, data, onValueChange }) => {
+        return (
+          <div className="field">
+            <label htmlFor="">{labelText}</label>
+            <input
+              type="number"
+              value={data}
+              onChange={(evt) => onValueChange(parseInt(evt.target.value))}
+            />
+          </div>
+        );
+      };
+
+      const TaxRangeInput = ({ label, min, max, data, onValueChange }) => {
+        return (
+          <div className="field">
+            <label htmlFor="">{label} :</label>
+            <input
+              type="range"
+              value={data}
+              id="rangeTax"
+              min={min}
+              max={max}
+              onChange={(evt) => onValueChange(parseInt(evt.target.value))}
+            />
+          </div>
+        );
+      };
+      const SalaryCalculator = ({ model }) => {
+        const data = model.toJSON();
+
+        return (
+          <section>
+            <SalaryCalculatorInput
+              labelText="Basic :"
+              data={data.basic}
+              onValueChange={(value) => model.set("basic", value)}
+            />
+            <SalaryCalculatorInput
+              labelText="HRA :"
+              data={data.hra}
+              onValueChange={(value) => model.set("hra", value)}
+            />
+            <SalaryCalculatorInput
+              labelText="DA :"
+              data={data.da}
+              onValueChange={(value) => model.set("da", value)}
+            />
+
+            <TaxRangeInput
+              labelText="Tax :"
+              min="0"
+              max="30"
+              data={data.tax}
+              onValueChange={(value) => model.set("tax", value)}
+            />
+            <div className="field">
+              <button id="btnCalculate" onClick={() => model.calculate()}>
+                Calculate
+              </button>
+            </div>
+            <div className="field">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Basic</th>
+                    <th>HRA</th>
+                    <th>DA</th>
+                    <th>Tax</th>
+                    <th>Salary</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td id="tdBasic">{data.basic}</td>
+                    <td id="tdHra">{data.hra}</td>
+                    <td id="tdDa">{data.da}</td>
+                    <td id="tdTax">{data.tax}</td>
+                    <td id="tdSalary">{data.salary}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        );
+      };
+      var root = ReactDOM.createRoot(document.getElementById("root"));
+      const model = new SalaryCalculatorModel();
+      model.set("basic", 10000);
+      model.set("hra", 2000);
+      model.set("da", 3000);
+      function renderCalculator() {
+        root.render(<SalaryCalculator model={model} />);
+      }
+      renderCalculator();
+      model.subscribe(renderCalculator);
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
