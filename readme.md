@@ -92,3 +92,8 @@ src
         index.js (create the store)
 
 ```
+
+## Homeword
+Create a 'Projects' module
+- Add a new project
+- List the projects
