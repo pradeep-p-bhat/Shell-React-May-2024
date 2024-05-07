@@ -5,8 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>State Manager - experimental</title>
     <script src="state-manager.js"></script>
+    <script>
+        /* 
+        // actions
+        let inc_action = { type : 'INCREMENT' },
+            dec_action = { type : 'DECREMENT' }
+        
+        // reducer
+        function counterReducer(currentState = 0, action){
+            if (action.type === 'INCREMENT') return currentState + 1;
+            if (action.type === 'DECREMENT') return currentState - 1;
+            return currentState;
+        }
+        
+        // create the store
+        let store = StateManager.createStore(counterReducer)
+        
+        // verify the store state initialization
+        console.log(store.getState())
+        
+        // subscribe for store state changes
+        store.subscribe(() => console.log('current state : ', store.getState()))
+        
+        //dispatch the actions
+        store.dispatch(inc_action)
+        
+        //dispatch the actions
+        store.dispatch(inc_action)
+        */
+    </script>
 </head>
 <body>
-    
+    <input type="number" name="" id="">
 </body>
 </html>

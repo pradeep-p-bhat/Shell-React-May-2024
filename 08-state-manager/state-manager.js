@@ -1,7 +1,8 @@
 let StateManager = (function () {
   let _currentState = undefined,
     _subscribers = [],
-    _reducer = undefined;
+    _reducer = undefined,
+    _init_action = { type : '@@INIT/ACTION' }
 
   function getState() {
     return _currentState;
@@ -13,7 +14,7 @@ let StateManager = (function () {
 
   // private
   function triggerChange() {
-    _subscribers.forEach((callbackFn) => callbackFn);
+    _subscribers.forEach(callbackFn => callbackFn());
   }
 
   function dispatch(action) {
@@ -28,6 +29,8 @@ let StateManager = (function () {
     if (typeof reducerFn !== 'function')
         throw new Error('invalid argument. reducer is mandatory to create a store!')
     _reducer = reducerFn;
+    // To get the valid default state
+    _currentState = _reducer(_currentState, _init_action);
     let store = { getState, subscribe, dispatch };
     return store;
   }
