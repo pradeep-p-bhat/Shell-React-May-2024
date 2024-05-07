@@ -36,24 +36,34 @@
     </script>
     <!-- 
         1. Initial Version
-
+        2. Processing user inputs (using 'payload' in action)
 
      -->
     <script src="babel.min.js"></script>
     <script src="react.development.js"></script>
     <script src="react-dom.development.js"></script>
     <script type="text/babel">
+        const App = ({store}) => {
+            const [show, setShow] = React.useState(true);
+            return (
+                <>
+                    <label >Show Counter :</label>
+                    <input type="checkbox" checked={show} onChange={evt => setShow(evt.target.checked)}/>
+                    { show && <Counter store={store}/> }
+                </>
+            )
+        }
         const Counter = ({store}) => {
+            const [delta, setDelta] = React.useState(0);
 
             // actions
-            let inc_action = { type : 'INCREMENT' },
-                dec_action = { type : 'DECREMENT' };
-
             const onDecrementClick = () => {
+                let dec_action = { type : 'DECREMENT', payload : delta };
                 store.dispatch(dec_action)
             };
 
             const onIncrementClick = () => {
+                let inc_action = { type : 'INCREMENT', payload : delta };
                 store.dispatch(inc_action);
             };
 
@@ -63,6 +73,9 @@
                 <>
                     <h3>Counter</h3>
                     <hr/>
+                    <label htmlFor="">Delta :</label>
+                    <input type="number" value={delta} onChange={evt => setDelta(parseInt(evt.target.value))}/>
+                    <br/>
                     <button onClick={onDecrementClick}>Decrement</button>
                     <span> [{value}] </span>
                     <button onClick={onIncrementClick}>Increment</button>
@@ -72,8 +85,8 @@
 
         // reducer
         function counterReducer(currentState = 0, action){
-            if (action.type === 'INCREMENT') return currentState + 1;
-            if (action.type === 'DECREMENT') return currentState - 1;
+            if (action.type === 'INCREMENT') return currentState + action.payload;
+            if (action.type === 'DECREMENT') return currentState - action.payload;
             return currentState;
         }
         
@@ -82,7 +95,7 @@
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
         function renderApp(){
-            root.render(<Counter store={store}/>)
+            root.render(<App store={store}/>)
         }
         renderApp()
         store.subscribe(renderApp);
