@@ -59,3 +59,6 @@
 
 ## Weekend Assignment
 ![image](./images/Day-2-Assignment.png)
+
+## State Manager
+![image](./images/state-manager.png)
