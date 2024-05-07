@@ -34,14 +34,59 @@
         store.dispatch(inc_action)
         */
     </script>
+    <script src="babel.min.js"></script>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script type="text/babel">
+        const Counter = ({store}) => {
+            
+
+            // actions
+            let inc_action = { type : 'INCREMENT' },
+                dec_action = { type : 'DECREMENT' };
+
+            const onDecrementClick = () => {
+                store.dispatch(dec_action)
+            };
+
+            const onIncrementClick = () => {
+                store.dispatch(inc_action);
+            };
+
+            const value = store.getState();
+
+            return (
+                <>
+                    <h3>Counter</h3>
+                    <hr/>
+                    <button onClick={onDecrementClick}>Decrement</button>
+                    <span> [{value}] </span>
+                    <button onClick={onIncrementClick}>Increment</button>
+                </>
+            )
+        }
+
+        // reducer
+        function counterReducer(currentState = 0, action){
+            if (action.type === 'INCREMENT') return currentState + 1;
+            if (action.type === 'DECREMENT') return currentState - 1;
+            return currentState;
+        }
+        
+        // create the store
+        let store = StateManager.createStore(counterReducer)
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        function renderApp(){
+            root.render(<Counter store={store}/>)
+        }
+        renderApp()
+        store.subscribe(renderApp);
+    </script>
 </head>
 <body>
     <div id="root">
-        <h3>Counter</h3>
-        <hr/>
-        <button>Decrement</button>
-        <span> [0] </span>
-        <button>Increment</button>
+        
     </div>
 </body>
 </html>
