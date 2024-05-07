@@ -62,3 +62,33 @@
 
 ## State Manager
 ![image](./images/state-manager.png)
+
+## ES6 Modules
+- Everything defined in a js/ts/jsx file is 'PRIVATE' by default
+- Any public entity has to be explicity 'EXPORT'ed
+    - The entities exported are assembled in a 'module' object and exported
+- To use any public entity from another file, it has to be explicitly 'IMPORT'ed
+
+## Bug Tracker application
+```
+src
+    bugs
+        actions
+            createNew.js
+            toggle.js
+            remove.js
+            removeClosed.js
+            index.js
+        reducers
+            bugsReducer.js
+        views
+            BugStats.jsx
+            BugEdit.jsx
+            BugSort.jsx
+            BugList.jsx
+            BugItem.jsx
+        index.js (Bugs component)
+    store
+        index.js (create the store)
+
+```
