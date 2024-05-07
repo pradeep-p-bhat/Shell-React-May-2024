@@ -44,14 +44,24 @@
         }
     </style>
     <script type="text/babel">
-        const BugTracker = () => {
-            const bugs = [];
+        // action creators
+        // action dispatchers
+        // reducer
+
+        const initialState = [];
+        function bugsReducer(currentState = initialState, action){
+
+            return currentState;
+        }
+        
+        const BugTracker = ({bugs}) => {
+            const closedCount = bugs.reduce((prevResult, bug) => bug.isClosed ? prevResult + 1 : prevResult, 0);
             return (
                 <>
                     <section className="stats">
-                        <span className="closed">{0}</span>
+                        <span className="closed">{closedCount}</span>
                         <span>/</span>
-                        <span>{1}</span>
+                        <span>{bugs.length}</span>
                     </section>
                     <section className="edit">
                         <label htmlFor="">Bug Name :</label>
@@ -85,8 +95,12 @@
                 </>
             )
         }
+        
+        const store = StateManager.createStore(bugsReducer);
+
         const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<BugTracker/>)
+        const bugs = store.getState()
+        root.render(<BugTracker bugs={bugs}/>)
     </script>
 </head>
 <body>
