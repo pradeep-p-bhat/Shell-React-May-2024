@@ -50,11 +50,35 @@
 
         const initialState = [];
         function bugsReducer(currentState = initialState, action){
+            switch (action.type) {
+                case 'BUGS_ADD':
+                    return [...currentState, action.payload]
+                    break;
+            
+                default:
+                    return currentState;
+            }
+            
+        }
 
-            return currentState;
+        // to be fixed
+        let _max_bug_id = 0;
+
+        const bugActionCreators = {
+            createNew(newBugName){
+                const newBug = {
+                    id : ++_max_bug_id,
+                    name : newBugName,
+                    isClosed : false,
+                    createdAt : new Date()
+                }
+                const action =  {type : 'BUGS_ADD', payload : newBug}
+                return action;
+            }
         }
         
-        const BugTracker = ({bugs}) => {
+        const BugTracker = ({bugs, createNew}) => {
+            const txtNewBugNameRef = React.createRef();
             const closedCount = bugs.reduce((prevResult, bug) => bug.isClosed ? prevResult + 1 : prevResult, 0);
             return (
                 <>
@@ -65,8 +89,11 @@
                     </section>
                     <section className="edit">
                         <label htmlFor="">Bug Name :</label>
-                        <input type="text" />
-                        <button>Add New</button>
+                        <input type="text" ref={txtNewBugNameRef} />
+                        <button 
+                            onClick={() => createNew(txtNewBugNameRef.current.value)}>
+                            Add New
+                        </button>
                     </section>
                     <section className="sort">
                         <label htmlFor="">Order By :</label>
@@ -80,13 +107,11 @@
                     <section className="list">
                     <ul>
                         { bugs.map(bug => (
-                            <>
                                 <li key={bug.id}>
                                     <span className={ "bugname " + (bug.isClosed ? 'closed' : '')}>{bug.name}</span>
                                     <div className="datetime">{bug.createdAt.toString()}</div>
                                     <button >Remove</button>
                                 </li>
-                            </>
                             ))
                         }
                     </ul>
@@ -98,9 +123,15 @@
         
         const store = StateManager.createStore(bugsReducer);
 
+        const bugActionDispatchers = StateManager.bindActionCreators(bugActionCreators, store.dispatch);
+
         const root = ReactDOM.createRoot(document.getElementById('root'));
-        const bugs = store.getState()
-        root.render(<BugTracker bugs={bugs}/>)
+        function renderApp(){
+            const bugs = store.getState()
+            root.render(<BugTracker bugs={bugs} {...bugActionDispatchers} />)
+        }
+        renderApp()
+        store.subscribe(renderApp)
     </script>
 </head>
 <body>
