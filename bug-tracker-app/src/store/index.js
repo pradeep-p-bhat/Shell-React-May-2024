@@ -61,8 +61,11 @@ const preloadedState = {
 }; 
 */
 
+/* 
 const hibernatedState = window.localStorage.getItem('bugStore') 
-const preloadedState = hibernatedState ? JSON.parse(hibernatedState) : { bugsState : [], projectsState : []}
+const preloadedState = hibernatedState ? JSON.parse(hibernatedState) : { bugsState : [], projectsState : []} 
+*/
+const preloadedState = undefined;
 const store = createStore(
   rootReducer,
   preloadedState, 
