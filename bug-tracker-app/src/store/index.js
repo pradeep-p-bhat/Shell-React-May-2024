@@ -35,22 +35,40 @@ const logMiddlewareFactory = ({getState, dispatch}) => next => action => {
 // implementation of 'redux-thunk'
 const asyncMiddlewareFactory = ({getState, dispatch}) => next => action => {
   if (typeof action === 'function'){
-    return action(dispatch);
+    return action(dispatch, getState);
   }
   return next(action);
 }
 
 const promiseMiddlewareFactory = ({getState, dispatch}) => next => action => {
   if (action instanceof Promise){
-    action.then(actionObj => dispatch(actionObj))
+    action
+      .then(actionObj => dispatch(actionObj))
+      .catch(err => {
+        dispatch({ type : 'ERROR_SET', payload : err.toString()})
+      })
     return;
   }
   return next(action)
 }
 
+function errorReducer(currentState = '', action){
+  switch (action.type) {
+    case "ERROR_SET":
+      return action.payload;
+      break;
+    case "ERROR_CLEAR":
+      return '';
+      break;
+    default:
+      return currentState;
+  }
+}
+
 const rootReducer = combineReducers({
     bugsState : bugsReducer,
-    projectsState : projectsReducer
+    projectsState : projectsReducer,
+    errorState : errorReducer
 })
 
 /* 
