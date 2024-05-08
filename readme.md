@@ -109,3 +109,6 @@ Create a 'Projects' module
 - Gets the data from the Smart component and displays it to the user
 - Gets the input from the user and invokes the given (from Smart component) function
 - Can have as many as possible
+
+## Middleware
+- Encapsulate any logic that need not be executed for all the actions

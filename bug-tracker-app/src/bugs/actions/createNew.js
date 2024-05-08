@@ -7,6 +7,7 @@ export function createNew(newBugName) {
     isClosed: false,
     createdAt: new Date(),
   };
+  
   const action = { type: "BUGS_ADD", payload: newBug };
   return action;
 }

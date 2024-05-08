@@ -1,6 +1,11 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as projectActionCreators from './actions'
 
-const Projects = ({projects, addProject}) => {
+const Projects = () => {
+    const projects = useSelector(({projectsState}) => projectsState)
+    const { addProject } = bindActionCreators(projectActionCreators, useDispatch())
     const txtProjectNameRef = React.useRef()
     return (
         <>

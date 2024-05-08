@@ -1,10 +1,11 @@
 
 const initialState = [
+  /* 
   { id: 1, name: "Bug Tracker" },
-  { id: 2, name: "Expense Tracker" },
+  { id: 2, name: "Expense Tracker" }, 
+  */
 ];
 function projectsReducer(currentState = initialState, action){
-    console.log('projectReducer invoked')
     if (action.type === 'PROJECTS_ADD'){
         return [...currentState, action.payload];
     }
