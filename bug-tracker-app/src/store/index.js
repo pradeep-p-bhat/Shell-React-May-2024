@@ -27,6 +27,13 @@ const logMiddlewareFactory = ({getState, dispatch}) => next => action => {
     console.groupEnd()
 }
 
+const asyncMiddlewareFactory = ({getState, dispatch}) => next => action => {
+  if (typeof action === 'function'){
+    return action(dispatch);
+  }
+  return next(action);
+}
+
 const rootReducer = combineReducers({
     bugsState : bugsReducer,
     projectsState : projectsReducer
@@ -68,7 +75,7 @@ const preloadedState = hibernatedState ? JSON.parse(hibernatedState) : { bugsSta
 const preloadedState = undefined;
 const store = createStore(
   rootReducer,
-  preloadedState, 
-  applyMiddleware(logMiddlewareFactory)
+  preloadedState,
+  applyMiddleware(logMiddlewareFactory, asyncMiddlewareFactory)
 );
 export default store;
