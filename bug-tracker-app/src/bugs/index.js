@@ -16,7 +16,9 @@ const Bugs = () => {
   
   return (
     <>
+
       <h3>Bugs</h3>
+      <button>Load Bugs</button>
       <BugStats count={bugs.length} closedCount={closedCount} />
       <BugEdit createNew={createNew} />
       <BugSort />

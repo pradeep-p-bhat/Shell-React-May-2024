@@ -130,6 +130,7 @@
     return p;
   }
 
+  /* 
   function divideAsyncPromiseClient(x, y) {
     console.log(`[@client] invoking the service`);
     let p = divideAsyncPromise(x, y);
@@ -139,6 +140,21 @@
     .catch(function(err){
         console.log(`[@client] error : ${err}`)
     })
+  } 
+  */
+
+  async function divideAsyncPromiseClient(x, y) {
+    console.log(`[@client] invoking the service`);
+    /* 
+    try {
+        let result = await divideAsyncPromise(x, y);
+        console.log(`[@client] result = ${result}`);
+    } catch(err) {
+      console.log(`[@client] error : ${err}`);
+    } 
+    */
+    let result = await divideAsyncPromise(x, y);
+    console.log(`[@client] result = ${result}`);
   }
 
   window["divideAsyncPromiseClient"] = divideAsyncPromiseClient;

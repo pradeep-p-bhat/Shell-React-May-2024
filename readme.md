@@ -112,3 +112,47 @@ Create a 'Projects' module
 
 ## Middleware
 - Encapsulate any logic that need not be executed for all the actions
+
+## Async Operations in JavaScript
+- callback
+- Promise
+- Async Await
+- Generators
+- Observables
+
+## json-server
+run the following command from the folder that has the 'db.json' file
+```
+npx json-server@0.17.4 db.json -p 3030
+```
+
+## axios
+installation
+```
+npm install axios
+```
+usage
+```
+var p = axios.get('http://localhost:3030/bugs');
+var p2 = p.then(function(response){
+    return response.data;
+})
+p2.then(function(bugs){
+    console.table(bugs);
+})
+```
+```
+axios.get('http://localhost:3030/bugs')
+.then(function(response){
+    return response.data;
+})
+.then(function(bugs){
+    console.table(bugs);
+})
+```
+
+```
+const response = await axios.get('http://localhost:3030/bugs')
+const bugs = response.data    
+console.table(bugs);
+```
