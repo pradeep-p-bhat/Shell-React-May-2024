@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 
@@ -9,15 +8,27 @@ import store from "./store";
 import Bugs from './bugs';
 import Projects from "./projects";
 
+const App = () => {
+  const onBtnHibernateClick = () => {
+    const appState = store.getState();
+    window.localStorage.setItem('bugStore', JSON.stringify(appState))
+  }
+  return (
+    <Provider store={store}>
+      <button onClick={onBtnHibernateClick}>Hibernate</button>
+      <div className="container">
+        <div className="container-child">
+          <Bugs />
+        </div>
+        <div className="container-child">
+          <Projects />
+        </div>
+      </div>
+    </Provider>
+  );
+}
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <Provider store={store}>
-    <div>
-      {/* <Projects /> */}
-      <Bugs />
-    </div>
-  </Provider>
-); 
+root.render(<App/>); 
 
 
 
