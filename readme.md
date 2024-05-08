@@ -1,6 +1,7 @@
 # React.js
 
 ## Magesh Kuppan
+- tkmagesh77@gmail.com
 
 ## Schedule
 - Commence      : 9:00 AM
@@ -156,3 +157,17 @@ const response = await axios.get('http://localhost:3030/bugs')
 const bugs = response.data    
 console.table(bugs);
 ```
+
+## Recordings
+- https://bit.ly/react-videos
+- https://bit.ly/javascript-training-videos
+- https://bit.ly/node-training-videos
+
+## Books
+- Refactoring
+- Refactoring to Patterns
+- Head First OOAD
+- Growing Object Oriented Software Guided By Tests
+- Agile Software Development: Principles Patterns & Practices
+- DSL (any book)
+- Functional Programming (any book)
