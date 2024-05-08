@@ -1,5 +1,7 @@
-import axios from 'axios';
+// import axios from 'axios';
+import bugApi from "../services/bugApi";
 
+/* 
 function getDataFromMemory(){
     return [
       {
@@ -24,9 +26,11 @@ function getDataFromServer(){
     })
     return p2;
 
-}
+} 
+*/
 
 // using the asyncMiddleware (thunk)
+/* 
 export function load(){
     return function(dispatch){
         const p = getDataFromServer();
@@ -37,6 +41,7 @@ export function load(){
         
     } 
 } 
+*/ 
 
 
 // using the promiseMiddleware
@@ -50,3 +55,9 @@ export function load() {
     return p2;
 } 
 */
+
+export async function load(){
+  const bugs = await bugApi.getAll()
+  const action = { type: "BUGS_INIT", payload: bugs };
+  return action;
+}

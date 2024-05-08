@@ -7,18 +7,24 @@ import BugList from './views/BugList';
 import './index.css';
 import useBugs from './hooks/useBugs'
 import useBugDispatchers from './hooks/useBugDispatchers';
+import { useEffect } from 'react';
 
 
 const Bugs = () => {
   
   const { bugs, closedCount } = useBugs()
   const { createNew, remove, toggle, removeClosed, load } = useBugDispatchers()
+
+  // Effect function executes whenever the component is loaded
+  useEffect(() => {
+    load()
+  }, []);
   
   return (
     <>
 
       <h3>Bugs</h3>
-      <button onClick={load}>Load Bugs</button>
+      {/* <button onClick={load}>Load Bugs</button> */}
       <BugStats count={bugs.length} closedCount={closedCount} />
       <BugEdit createNew={createNew} />
       <BugSort />

@@ -1,13 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 
 import store from "./store";
 import Bugs from './bugs';
 import Projects from "./projects";
 
+const ErrorPlaceHolder = () => {
+  const error = useSelector(storeState => storeState.errorState)
+  const dispatch = useDispatch();
+
+  const clearClick = () => {
+    const clearAction = { type : 'ERROR_CLEAR'}
+    dispatch(clearAction);
+  }
+  return (
+    <div>
+      {error && (
+        <div>
+          <div>{error}</div>
+          <button onClick={clearClick}>Clear</button>
+        </div>
+      )}
+    </div>
+  );
+}
 
 const App = () => {
   const onBtnHibernateClick = () => {
@@ -16,6 +35,7 @@ const App = () => {
   }
   return (
     <Provider store={store}>
+      <ErrorPlaceHolder/>
       <button onClick={onBtnHibernateClick}>Hibernate</button>
       <div className="container">
         <div className="container-child">
