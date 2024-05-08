@@ -25,6 +25,8 @@ function getDataFromServer(){
     return p2;
 
 }
+
+// using the asyncMiddleware (thunk)
 export function load(){
     return function(dispatch){
         const p = getDataFromServer();
@@ -33,6 +35,18 @@ export function load(){
             dispatch(action);
         })
         
-    }
-    
-}
+    } 
+} 
+
+
+// using the promiseMiddleware
+/* 
+export function load() {
+    const p = getDataFromServer();
+    const p2 = p.then(function (bugs) {
+      const action = { type: "BUGS_INIT", payload: bugs };
+      return action
+    });
+    return p2;
+} 
+*/

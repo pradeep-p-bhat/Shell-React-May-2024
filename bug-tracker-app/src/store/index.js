@@ -2,6 +2,10 @@ import {legacy_createStore as createStore, combineReducers, applyMiddleware} fro
 import bugsReducer from '../bugs/reducers/bugsReducer';
 import projectsReducer from '../projects/reducer';
 
+// middlewares
+import logger from 'redux-logger'
+import { thunk } from 'redux-thunk';
+
 // log middleware
 /* 
 function logMiddlewareFactory(store){
@@ -18,6 +22,7 @@ function logMiddlewareFactory(store){
 } 
 */
 
+// implementation of 'redux-logger'
 const logMiddlewareFactory = ({getState, dispatch}) => next => action => {
     console.group(action.type)
     console.log('Before :', getState())
@@ -27,11 +32,20 @@ const logMiddlewareFactory = ({getState, dispatch}) => next => action => {
     console.groupEnd()
 }
 
+// implementation of 'redux-thunk'
 const asyncMiddlewareFactory = ({getState, dispatch}) => next => action => {
   if (typeof action === 'function'){
     return action(dispatch);
   }
   return next(action);
+}
+
+const promiseMiddlewareFactory = ({getState, dispatch}) => next => action => {
+  if (action instanceof Promise){
+    action.then(actionObj => dispatch(actionObj))
+    return;
+  }
+  return next(action)
 }
 
 const rootReducer = combineReducers({
@@ -76,6 +90,12 @@ const preloadedState = undefined;
 const store = createStore(
   rootReducer,
   preloadedState,
-  applyMiddleware(logMiddlewareFactory, asyncMiddlewareFactory)
+  applyMiddleware(
+    /* logMiddlewareFactory, */
+    logger,
+    /* asyncMiddlewareFactory, */
+    thunk,
+    promiseMiddlewareFactory
+  )
 );
 export default store;
