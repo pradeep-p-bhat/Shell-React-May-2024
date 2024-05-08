@@ -1,7 +1,7 @@
 import React from 'react';
 
 const BugEdit = ({ createNew }) => {
-  const txtNewBugNameRef = React.createRef();
+  const txtNewBugNameRef = React.useRef();
   return (
     <section className="edit">
       <label htmlFor="">Bug Name :</label>

@@ -93,7 +93,19 @@ src
 
 ```
 
-## Homeword
+## Homework
 Create a 'Projects' module
 - Add a new project
 - List the projects
+
+## Component
+### Smart / Container Component
+- Does not interact with the user
+- Interfaces with the state manager and gets the data for the presentation components
+- Prepares the action dispatchers to be used by the presentation components
+- Advisable to have fewer Container Components
+
+### Dumb / Presentation Component
+- Gets the data from the Smart component and displays it to the user
+- Gets the input from the user and invokes the given (from Smart component) function
+- Can have as many as possible
