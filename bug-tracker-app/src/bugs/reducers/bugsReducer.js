@@ -1,5 +1,6 @@
 const initialState = [];
 function bugsReducer(currentState = initialState, action) {
+  console.log("bugsReducer invoked");
   switch (action.type) {
     case "BUGS_ADD":
       return [...currentState, action.payload];
